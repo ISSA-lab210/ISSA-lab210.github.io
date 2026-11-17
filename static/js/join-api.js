@@ -45,6 +45,7 @@
       b.classList.toggle('active', b.getAttribute('data-auth') === tab);
     });
     $('loginForm').hidden = tab !== 'login';
+    $('codeLoginForm').hidden = true;
     $('registerForm').hidden = tab !== 'register';
   }
 
@@ -62,6 +63,74 @@
     fd.set('email', $('loginEmail').value.trim());
     fd.set('password', $('loginPassword').value);
     api('/api/login', {
+      method: 'POST', body: fd,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).then(function (data) {
+      setToken(data.token);
+      msg.textContent = '';
+      return loadJoin();
+    }).catch(function (err) {
+      msg.textContent = err.message;
+    });
+  });
+
+  // 密码登录 / 验证码登录切换
+  $('toCodeLogin').addEventListener('click', function (e) {
+    e.preventDefault();
+    $('loginForm').hidden = true;
+    $('codeLoginForm').hidden = false;
+    $('codeLoginMsg').textContent = '';
+    $('codeEmail').focus();
+  });
+  $('toPwdLogin').addEventListener('click', function (e) {
+    e.preventDefault();
+    $('codeLoginForm').hidden = true;
+    $('loginForm').hidden = false;
+    $('loginMsg').textContent = '';
+    $('loginEmail').focus();
+  });
+
+  // 验证码登录：发送验证码
+  var loginCodeTimer = null;
+  $('sendLoginCodeBtn').addEventListener('click', function () {
+    var btn = $('sendLoginCodeBtn');
+    var email = $('codeEmail').value.trim();
+    var msg = $('codeLoginMsg');
+    msg.className = 'auth-msg';
+    if (!email) { msg.textContent = '请先填写邮箱'; return; }
+    btn.disabled = true;
+    msg.textContent = '正在发送…';
+    var fd = new URLSearchParams();
+    fd.set('email', email);
+    api('/api/login-code/send', {
+      method: 'POST', body: fd,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).then(function (data) {
+      msg.className = 'auth-msg ok';
+      msg.textContent = data.msg || '验证码已发送';
+      var left = 60;
+      btn.textContent = left + 's';
+      loginCodeTimer = setInterval(function () {
+        left -= 1;
+        btn.textContent = left > 0 ? left + 's' : '发送验证码';
+        if (left <= 0) { clearInterval(loginCodeTimer); btn.disabled = false; }
+      }, 1000);
+    }).catch(function (err) {
+      msg.textContent = err.message;
+      btn.disabled = false;
+    });
+  });
+
+  // 验证码登录：校验并登录
+  $('codeLoginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var msg = $('codeLoginMsg');
+    msg.className = 'auth-msg';
+    msg.textContent = '正在登录…';
+    var fd = new URLSearchParams();
+    fd.set('email', $('codeEmail').value.trim());
+    fd.set('code', $('codeCode').value.trim());
+    api('/api/login-code/verify', {
       method: 'POST', body: fd,
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function (data) {

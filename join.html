@@ -16,6 +16,8 @@
   .auth-tabs button.active { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
   .auth-msg { min-height: 1.4em; font-size: .82rem; margin: .7rem 0 0; color: var(--danger); }
   .auth-msg.ok { color: var(--accent-dark); }
+  .auth-switch { font-size: .82rem; text-align: center; margin: .9rem 0 0; }
+  .auth-switch a { color: var(--accent-dark); }
   .account-bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
     font-size: .86rem; color: var(--muted); margin-bottom: 1rem; flex-wrap: wrap; }
   .account-bar strong { color: var(--ink); font-weight: 600; }
@@ -91,6 +93,24 @@
             </div>
             <button class="btn btn-primary btn-block" type="submit">登录</button>
             <p class="auth-msg" id="loginMsg"></p>
+            <p class="auth-switch"><a href="#" id="toCodeLogin">改用邮箱验证码登录</a></p>
+          </form>
+
+          <form id="codeLoginForm" hidden>
+            <div class="form-row">
+              <label for="codeEmail">邮箱</label>
+              <input id="codeEmail" type="email" required autocomplete="username" placeholder="注册时使用的邮箱">
+            </div>
+            <div class="form-row">
+              <label for="codeCode">邮箱验证码</label>
+              <div class="code-row">
+                <input id="codeCode" type="text" required maxlength="6" inputmode="numeric" placeholder="6 位验证码">
+                <button class="btn" type="button" id="sendLoginCodeBtn">发送验证码</button>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">登录</button>
+            <p class="auth-msg" id="codeLoginMsg"></p>
+            <p class="auth-switch"><a href="#" id="toPwdLogin">改用密码登录</a></p>
           </form>
 
           <form id="registerForm" hidden>
