@@ -746,6 +746,43 @@ p { margin: 0 0 1em; }
 .shots-fieldset { border: none; margin: 0; padding: 0; }
 .shots-fieldset > legend { padding: 0; }
 
+/* 问卷选项（招新页方向分流） */
+.choice-group { display: flex; flex-direction: column; gap: .55rem; }
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  margin: 0;
+  padding: .8rem .95rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  cursor: pointer;
+  font-weight: 400;
+  transition: border-color .18s, background .18s, box-shadow .18s;
+}
+.choice:hover { border-color: var(--accent); }
+.choice:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  box-shadow: 0 0 0 3px rgba(79, 122, 99, .08);
+}
+.choice input[type="radio"] {
+  width: 15px; height: 15px;
+  margin: .28rem 0 0;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+.choice span {
+  display: flex;
+  flex-direction: column;
+  gap: .18rem;
+  font-size: .92rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.choice span small { font-size: .78rem; color: var(--muted); font-weight: 400; }
+
 /* 招新页两栏 */
 .join-layout {
   display: grid;
