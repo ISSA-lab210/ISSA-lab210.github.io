@@ -263,7 +263,8 @@
       $('editNote').hidden = false;
       document.querySelectorAll('input[name="direction"]').forEach(function (r) {
         r.checked = (r.value === reg.direction) ||
-                    (r.value === '边缘计算' && reg.direction === '边缘计算 / 边缘安全');
+                    (r.value === '边缘安全' &&
+                     (reg.direction === '边缘计算' || reg.direction === '边缘计算 / 边缘安全'));
       });
       var sv = reg.survey || '';
       document.querySelectorAll('input[name="coding"]').forEach(function (r) {
