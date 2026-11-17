@@ -252,6 +252,8 @@
       $('college').value = reg.college || '';
       $('major').value = reg.major || '';
       $('intro').value = reg.intro || '';
+      var g = document.querySelector('input[name="gender"][value="' + (reg.gender || '') + '"]');
+      if (g) g.checked = true;
       $('editNote').hidden = false;
       document.querySelectorAll('input[name="direction"]').forEach(function (r) {
         r.checked = (r.value === reg.direction);
