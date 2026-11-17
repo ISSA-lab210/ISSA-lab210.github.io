@@ -294,45 +294,10 @@
     });
   }
 
-  /* ---------------- 图片压缩 ---------------- */
-  function compress(file) {
-    return new Promise(function (resolve) {
-      if (!file || !/^image\//.test(file.type || '')) { resolve(file); return; }
-      var img = new Image();
-      var url = URL.createObjectURL(file);
-      img.onload = function () {
-        URL.revokeObjectURL(url);
-        var maxSide = 2000;
-        var scale = Math.min(1, maxSide / Math.max(img.width, img.height));
-        if (scale >= 1 && file.size <= 800 * 1024) { resolve(file); return; }
-        var canvas = document.createElement('canvas');
-        canvas.width = Math.round(img.width * scale);
-        canvas.height = Math.round(img.height * scale);
-        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob(function (blob) {
-          if (blob && blob.size < file.size) {
-            resolve(new File([blob], 'shot.jpg', { type: 'image/jpeg' }));
-          } else { resolve(file); }
-        }, 'image/jpeg', 0.85);
-      };
-      img.onerror = function () { URL.revokeObjectURL(url); resolve(file); };
-      img.src = url;
-    });
-  }
-
   /* ---------------- 提交 ---------------- */
-  var KEYS = ['shot_claude', 'shot_ccswitch', 'shot_conda'];
   var form = $('joinForm');
   var btn = $('submitBtn');
-  var progress = $('uploadProgress');
-  var fill = $('uploadBarFill');
-  var tip = $('uploadTip');
   var joinMsg = $('joinMsg');
-
-  function setPct(p) {
-    if (fill) fill.style.width = p + '%';
-    if (tip) tip.textContent = '正在上传截图 ' + p + '%';
-  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -340,60 +305,37 @@
     joinMsg.textContent = '';
     if (!token()) { showAuth('login'); return; }
 
+    var fd = new FormData(form);
+    fd.set('survey', $('surveyField').value);
     btn.disabled = true;
     var label = btn.textContent;
-    btn.textContent = '正在压缩图片…';
+    btn.textContent = '正在提交…';
 
-    Promise.all(KEYS.map(function (k) {
-      var input = $(k);
-      var f = input && input.files && input.files[0];
-      return f ? compress(f) : Promise.resolve(null);
-    })).then(function (shots) {
-      var fd = new FormData(form);
-      shots.forEach(function (blob, i) {
-        if (blob) fd.set(KEYS[i], blob, blob.name || KEYS[i] + '.jpg');
-      });
-      fd.set('survey', $('surveyField').value);
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', API + '/api/join');
-      xhr.setRequestHeader('Authorization', 'Bearer ' + token());
-      progress.hidden = false;
-      setPct(0);
-      xhr.upload.addEventListener('progress', function (ev) {
-        if (ev.lengthComputable) setPct(Math.min(100, Math.round(ev.loaded / ev.total * 100)));
-      });
-      xhr.upload.addEventListener('load', function () {
-        tip.textContent = '上传完成，服务器处理中…';
-      });
-      xhr.addEventListener('load', function () {
+    fetch(API + '/api/join', {
+      method: 'POST',
+      body: fd,
+      headers: { 'Authorization': 'Bearer ' + token() }
+    }).then(function (res) {
+      return res.text().then(function (txt) {
         var data = null;
-        try { data = JSON.parse(xhr.responseText); } catch (err) { data = null; }
-        progress.hidden = true;
-        btn.disabled = false;
-        btn.textContent = label;
-        if (data && data.ok) {
-          $('doneTitle').textContent = data.updated ? '修改成功！' : '报名成功！';
-          $('doneText').textContent = ($('name').value || '同学') + '，你的报名信息已' + (data.updated ? '更新' : '提交') + '。';
-          show('doneCard');
-        } else if (xhr.status === 401) {
-          setToken('');
-          showAuth('login');
-        } else {
-          joinMsg.textContent = (data && data.msg) || ('提交失败（HTTP ' + xhr.status + '）');
+        try { data = JSON.parse(txt); } catch (err) { /* 非 JSON */ }
+        if (!res.ok || (data && data.ok === false)) {
+          if (res.status === 401) { setToken(''); showAuth('login'); return null; }
+          throw new Error((data && data.msg) || ('提交失败（HTTP ' + res.status + '）'));
         }
+        return data;
       });
-      xhr.addEventListener('error', function () {
-        progress.hidden = true;
-        btn.disabled = false;
-        btn.textContent = label;
-        joinMsg.textContent = '网络错误，请检查网络后重试';
-      });
-      xhr.send(fd);
-    }).catch(function () {
+    }).then(function (data) {
       btn.disabled = false;
       btn.textContent = label;
-      joinMsg.textContent = '图片处理失败，请重试';
+      if (!data) return;
+      $('doneTitle').textContent = data.updated ? '修改成功！' : '报名成功！';
+      $('doneText').textContent = ($('name').value || '同学') + '，你的报名信息已' + (data.updated ? '更新' : '提交') + '。';
+      show('doneCard');
+    }).catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = label;
+      joinMsg.textContent = err.message;
     });
   });
 

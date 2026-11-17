@@ -241,33 +241,10 @@
               </div>
             </fieldset>
 
-            <fieldset class="form-section shots-fieldset">
-              <legend><span class="idx">04</span>环境准备截图 <em>三张都要传，jpg / png 均可</em></legend>
 
-              <div class="upload-slot form-row">
-                <label for="shot_claude">1. Claude Code 安装成功截图</label>
-                <input id="shot_claude" name="shot_claude" type="file" accept=".jpg,.jpeg,.png,.webp" required>
-                <p class="hint ok-note" id="ok_claude" hidden>已上传，重新选择可替换</p>
-              </div>
-
-              <div class="upload-slot form-row">
-                <label for="shot_ccswitch">2. 使用 CC Switch 配置好任意一家国内模型的截图</label>
-                <input id="shot_ccswitch" name="shot_ccswitch" type="file" accept=".jpg,.jpeg,.png,.webp" required>
-                <p class="hint ok-note" id="ok_ccswitch" hidden>已上传，重新选择可替换</p>
-              </div>
-
-              <div class="upload-slot form-row">
-                <label for="shot_conda">3. Anaconda 安装完成后，在 cmd 输入 conda --version 的截图</label>
-                <input id="shot_conda" name="shot_conda" type="file" accept=".jpg,.jpeg,.png,.webp" required>
-                <p class="hint ok-note" id="ok_conda" hidden>已上传，重新选择可替换</p>
-              </div>
-            </fieldset>
 
             <button class="btn btn-primary btn-block btn-lg" type="submit" id="submitBtn">提交报名</button>
-            <div class="upload-progress" id="uploadProgress" hidden>
-              <div class="upload-bar"><div class="upload-bar-fill" id="uploadBarFill"></div></div>
-              <p class="hint center" id="uploadTip">正在上传 0%</p>
-            </div>
+
             <p class="hint center" id="joinMsg"></p>
           </form>
         </div>
