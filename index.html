@@ -26,8 +26,8 @@
 
     <div class="nav-actions">
       
-        <a class="btn btn-ghost btn-sm" href="#" data-join-gate="1">登录</a>
-        <a class="btn btn-primary btn-sm" href="#" data-join-gate="1">注册报名</a>
+        <a class="btn btn-ghost btn-sm" href="join.html">登录</a>
+        <a class="btn btn-primary btn-sm" href="join.html">注册报名</a>
       
       
     </div>
@@ -51,7 +51,7 @@
           不需要你现在什么都会——只需要你愿意开始。
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary btn-lg" href="#" data-join-gate="1">报名填报</a>
+          <a class="btn btn-primary btn-lg" href="join.html">报名填报</a>
           <a class="btn btn-lg" href="#research">看看我们在做什么</a>
         </div>
       </div>
@@ -220,7 +220,7 @@
     <p>
       本次报名截止：2026-10-06T23:59 · 填写报名信息，面试结果将通过邮箱通知。
     </p>
-    <a class="btn btn-primary btn-lg" href="#" data-join-gate="1">报名填报</a>
+    <a class="btn btn-primary btn-lg" href="join.html">报名填报</a>
   </div>
 </section>
 
@@ -243,8 +243,8 @@
       <div class="footer-col">
         <h4>Access</h4>
         
-        <a href="#" data-join-gate="1">学生登录</a>
-        <a href="#" data-join-gate="1">注册报名</a>
+        <a href="join.html">学生登录</a>
+        <a href="join.html">注册报名</a>
         
         
       </div>
@@ -258,42 +258,5 @@
 
 <script src="/static/js/main.js"></script>
 
-
-<style>
-.gate-modal{position:fixed;inset:0;z-index:200;background:rgba(16,22,20,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px}
-.gate-modal[hidden]{display:none}
-.gate-card{background:#fff;border-radius:10px;max-width:430px;width:100%;padding:28px 26px 22px;border:1px solid #e2e1d8;box-shadow:0 24px 60px -30px rgba(16,22,20,.5)}
-.gate-eyebrow{font-family:var(--mono,monospace);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#4f7a63;margin:0 0 10px}
-.gate-card h3{font-size:1.15rem;margin:0 0 10px;color:#141a18}
-.gate-card p{font-size:.88rem;color:#6c7772;line-height:1.7;margin:0 0 18px}
-.gate-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
-</style>
-
-<div class="gate-modal" id="gateModal" hidden>
-  <div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
-    <p class="gate-eyebrow">Registration</p>
-    <h3 id="gateTitle">即将前往报名系统</h3>
-    <p>报名、登录与材料上传由实验室报名系统提供，将在新标签页打开。本页仅用于展示实验室信息。</p>
-    <div class="gate-actions">
-      <button class="btn" type="button" id="gateCancel">留在本页</button>
-      <a class="btn btn-primary" id="gateGo" href="https://25f8b8a8443b44b4a4e269b48442d7fc.hn.takin.cc/" target="_blank" rel="noopener">继续前往</a>
-    </div>
-  </div>
-</div>
-<script>
-(function(){
-  var modal = document.getElementById('gateModal');
-  if (!modal) return;
-  function open(){ modal.hidden = false; document.body.style.overflow = 'hidden'; }
-  function close(){ modal.hidden = true; document.body.style.overflow = ''; }
-  document.querySelectorAll('[data-join-gate]').forEach(function(a){
-    a.addEventListener('click', function(e){ e.preventDefault(); open(); });
-  });
-  document.getElementById('gateCancel').addEventListener('click', close);
-  document.getElementById('gateGo').addEventListener('click', function(){ setTimeout(close, 300); });
-  modal.addEventListener('click', function(e){ if (e.target === modal) close(); });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !modal.hidden) close(); });
-})();
-</script>
 </body>
 </html>
