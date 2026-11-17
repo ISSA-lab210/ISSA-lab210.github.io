@@ -223,12 +223,17 @@
         if (!showIt && clearHidden) r.checked = false;
       });
     });
-    var level = document.querySelector('.survey-branch[data-branch="' + (key || 'none') + '"] input:checked');
-    var val = dir ? '方向：' + dir : '';
-    if (level) val += (val ? '；' : '') + '了解程度：' + level.value;
-    $('surveyField').value = val;
+    var parts = [];
+    if (dir) parts.push('方向：' + dir);
+    var coding = document.querySelector('input[name="coding"]:checked');
+    if (coding) parts.push('代码基础：' + coding.value);
+    var level = document.querySelector('.survey-branch[data-branch="' + (key || 'none') + '"] input[name^="survey_level"]:checked');
+    if (level) parts.push('了解程度：' + level.value);
+    var scene = document.querySelector('.survey-branch[data-branch="' + (key || 'none') + '"] input[name^="survey_scene"]:checked');
+    if (scene) parts.push('场景题：' + scene.value);
+    $('surveyField').value = parts.join('；');
   }
-  document.querySelectorAll('input[name="direction"], .survey-branch input').forEach(function (el) {
+  document.querySelectorAll('input[name="direction"], input[name="coding"], .survey-branch input').forEach(function (el) {
     el.addEventListener('change', function () { syncSurvey(true); });
   });
 
@@ -259,8 +264,12 @@
         r.checked = (r.value === reg.direction);
       });
       var sv = reg.survey || '';
+      document.querySelectorAll('input[name="coding"]').forEach(function (r) {
+        r.checked = sv.indexOf('代码基础：' + r.value) >= 0;
+      });
       document.querySelectorAll('.survey-branch input').forEach(function (r) {
-        r.checked = sv.indexOf(r.value) >= 0;
+        var prefix = r.name.indexOf('survey_level') >= 0 ? '了解程度：' : '场景题：';
+        r.checked = sv.indexOf(prefix + r.value) >= 0;
       });
       ['claude', 'ccswitch', 'conda'].forEach(function (k) {
         if (reg['shot_' + k]) {

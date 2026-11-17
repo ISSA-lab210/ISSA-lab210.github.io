@@ -197,6 +197,24 @@
               <p class="hint" style="margin:-.4rem 0 1.1rem;">本次招新：信号处理 / 音频信号处理 1 人，边缘计算 / 边缘安全 1 人。两道题只用于了解你的兴趣基础，不影响录取。</p>
 
               <div class="form-row">
+                <label>你写过代码吗？<em>*</em></label>
+                <div class="choice-group">
+                  <label class="choice">
+                    <input type="radio" name="coding" value="没写过" required>
+                    <span>没写过</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="coding" value="写过课程作业（C / Python 等）">
+                    <span>写过课程作业（C / Python 等）</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="coding" value="做过完整项目或参加过竞赛">
+                    <span>做过完整项目或参加过竞赛</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-row">
                 <label>你更想加入哪个方向？<em>*</em></label>
                 <div class="choice-group">
                   <label class="choice">
@@ -210,21 +228,43 @@
                 </div>
               </div>
 
-              <div class="form-row survey-branch" data-branch="signal" hidden>
-                <label>你对音频 / 信号处理的了解程度？<em>*</em></label>
-                <div class="choice-group">
-                  <label class="choice"><input type="radio" name="survey_level_signal" value="完全没接触过"><span>完全没接触过</span></label>
-                  <label class="choice"><input type="radio" name="survey_level_signal" value="学过基础理论（采样、FFT、滤波）"><span>学过基础理论（采样、FFT、滤波）</span></label>
-                  <label class="choice"><input type="radio" name="survey_level_signal" value="做过相关课程设计或项目"><span>做过相关课程设计或项目</span></label>
+              <div class="survey-branch" data-branch="signal" hidden>
+                <div class="form-row">
+                  <label>你对音频 / 信号处理的了解程度？<em>*</em></label>
+                  <div class="choice-group">
+                    <label class="choice"><input type="radio" name="survey_level_signal" value="完全没接触过"><span>完全没接触过</span></label>
+                    <label class="choice"><input type="radio" name="survey_level_signal" value="学过基础理论（采样、FFT、滤波）"><span>学过基础理论（采样、FFT、滤波）</span></label>
+                    <label class="choice"><input type="radio" name="survey_level_signal" value="做过相关课程设计或项目"><span>做过相关课程设计或项目</span></label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label>让你做一个「实时降噪」的小功能，你会先做什么？<em>*</em></label>
+                  <div class="choice-group">
+                    <label class="choice"><input type="radio" name="survey_scene_signal" value="不知道从哪下手"><span>不知道从哪下手</span></label>
+                    <label class="choice"><input type="radio" name="survey_scene_signal" value="先查资料，搞清楚噪声的类型"><span>先查资料，搞清楚噪声的类型</span></label>
+                    <label class="choice"><input type="radio" name="survey_scene_signal" value="用现成库做滤波实验，听效果"><span>用现成库做滤波实验，听效果</span></label>
+                    <label class="choice"><input type="radio" name="survey_scene_signal" value="设计滤波器并对比不同参数的效果"><span>设计滤波器并对比不同参数的效果</span></label>
+                  </div>
                 </div>
               </div>
 
-              <div class="form-row survey-branch" data-branch="edge" hidden>
-                <label>你对边缘计算 / 边缘安全的了解程度？<em>*</em></label>
-                <div class="choice-group">
-                  <label class="choice"><input type="radio" name="survey_level_edge" value="完全没接触过"><span>完全没接触过</span></label>
-                  <label class="choice"><input type="radio" name="survey_level_edge" value="了解基本概念（端侧推理、边缘节点）"><span>了解基本概念（端侧推理、边缘节点）</span></label>
-                  <label class="choice"><input type="radio" name="survey_level_edge" value="做过部署或安全相关实践"><span>做过部署或安全相关实践</span></label>
+              <div class="survey-branch" data-branch="edge" hidden>
+                <div class="form-row">
+                  <label>你对边缘计算 / 边缘安全的了解程度？<em>*</em></label>
+                  <div class="choice-group">
+                    <label class="choice"><input type="radio" name="survey_level_edge" value="完全没接触过"><span>完全没接触过</span></label>
+                    <label class="choice"><input type="radio" name="survey_level_edge" value="了解基本概念（端侧推理、边缘节点）"><span>了解基本概念（端侧推理、边缘节点）</span></label>
+                    <label class="choice"><input type="radio" name="survey_level_edge" value="做过部署或安全相关实践"><span>做过部署或安全相关实践</span></label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <label>模型在设备上跑得太慢，你会先尝试？<em>*</em></label>
+                  <div class="choice-group">
+                    <label class="choice"><input type="radio" name="survey_scene_edge" value="不知道怎么办"><span>不知道怎么办</span></label>
+                    <label class="choice"><input type="radio" name="survey_scene_edge" value="换一个更小的模型"><span>换一个更小的模型</span></label>
+                    <label class="choice"><input type="radio" name="survey_scene_edge" value="做量化或剪枝"><span>做量化或剪枝</span></label>
+                    <label class="choice"><input type="radio" name="survey_scene_edge" value="先分析瓶颈在 CPU / 内存 / IO，再针对性优化"><span>先分析瓶颈在 CPU / 内存 / IO，再针对性优化</span></label>
+                  </div>
                 </div>
               </div>
 
