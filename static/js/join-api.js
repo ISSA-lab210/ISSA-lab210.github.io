@@ -210,6 +210,7 @@
   function branchKey(dir) {
     if (dir.indexOf('信号') >= 0) return 'signal';
     if (dir.indexOf('边缘') >= 0) return 'edge';
+    if (dir.indexOf('安全') >= 0) return 'security';
     return '';
   }
   function syncSurvey(clearHidden) {
@@ -261,7 +262,8 @@
       if (g) g.checked = true;
       $('editNote').hidden = false;
       document.querySelectorAll('input[name="direction"]').forEach(function (r) {
-        r.checked = (r.value === reg.direction);
+        r.checked = (r.value === reg.direction) ||
+                    (r.value === '边缘计算' && reg.direction === '边缘计算 / 边缘安全');
       });
       var sv = reg.survey || '';
       document.querySelectorAll('input[name="coding"]').forEach(function (r) {
