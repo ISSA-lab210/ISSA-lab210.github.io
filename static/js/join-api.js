@@ -66,6 +66,7 @@
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function (data) {
       setToken(data.token);
+      msg.textContent = '';
       return loadJoin();
     }).catch(function (err) {
       msg.textContent = err.message;
@@ -119,6 +120,7 @@
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function (data) {
       setToken(data.token);
+      msg.textContent = '';
       return loadJoin();
     }).catch(function (err) {
       msg.textContent = err.message;
