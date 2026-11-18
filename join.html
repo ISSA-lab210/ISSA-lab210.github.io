@@ -162,17 +162,25 @@
                          inputmode="numeric" pattern="[0-9]{10}" title="学号为 10 位数字" placeholder="例：3126xxxxxx">
                 </div>
               </div>
-              <div class="form-row">
-                <label>性别 <em>*</em></label>
-                <div class="choice-group choice-inline">
-                  <label class="choice">
-                    <input type="radio" name="gender" value="男" required>
-                    <span>男</span>
-                  </label>
-                  <label class="choice">
-                    <input type="radio" name="gender" value="女" required>
-                    <span>女</span>
-                  </label>
+              <div class="form-row two-col">
+                <div>
+                  <label for="phone">手机号 <em>*</em></label>
+                  <input id="phone" name="phone" type="tel" required maxlength="11"
+                         inputmode="numeric" pattern="1[3-9][0-9]{9}" title="请填写 11 位手机号"
+                         placeholder="用于面试联系">
+                </div>
+                <div>
+                  <label>性别 <em>*</em></label>
+                  <div class="choice-group choice-inline">
+                    <label class="choice">
+                      <input type="radio" name="gender" value="男" required>
+                      <span>男</span>
+                    </label>
+                    <label class="choice">
+                      <input type="radio" name="gender" value="女" required>
+                      <span>女</span>
+                    </label>
+                  </div>
                 </div>
               </div>
               <div class="form-row two-col">

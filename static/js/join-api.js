@@ -255,6 +255,7 @@
     if (reg) {
       $('name').value = reg.name || '';
       $('student_id').value = reg.student_id || '';
+      $('phone').value = reg.phone || '';
       $('college').value = reg.college || '';
       $('major').value = reg.major || '';
       $('intro').value = reg.intro || '';
